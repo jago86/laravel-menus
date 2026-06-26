@@ -7,18 +7,18 @@ $finder = PhpCsFixer\Finder::create()
     ])
 ;
 
-return PhpCsFixer\Config::create()
+return (new PhpCsFixer\Config())
     ->setFinder($finder)
     ->setRules([
         '@PSR2' => true,
         // Concatenation should be used with at least one whitespace around.
         'concat_space' => ['spacing' => 'one'],
-        // Unused use statements must be removed.
+        // Ordering use statements alphabetically.
         'ordered_imports' => true,
         // Removes extra empty lines.
-        'no_extra_consecutive_blank_lines' => true,
+        'no_extra_blank_lines' => true,
         // An empty line feed should precede a return statement.
-        'blank_line_before_return' => true,
+        'blank_line_before_statement' => ['statements' => ['return']],
         // Unused use statements must be removed.
         'no_unused_imports' => true,
         // Remove trailing whitespace at the end of blank lines.
@@ -26,7 +26,7 @@ return PhpCsFixer\Config::create()
         // There MUST be one blank line after the namespace declaration.
         'blank_line_after_namespace' => true,
         // There should be exactly one blank line before a namespace declaration.
-        'single_blank_line_before_namespace' => true,
+        'blank_lines_before_namespace' => true,
         // Each namespace use MUST go on its own line and there MUST be one blank line after the use statements block.
         'single_line_after_imports' => true,
         // Ensure there is no code on the same line as the PHP open tag and it is followed by a blankline.
@@ -34,7 +34,7 @@ return PhpCsFixer\Config::create()
         // Remove duplicated semicolons.
         'no_empty_statement' => true,
         // PHP multi-line arrays should have a trailing comma.
-        'trailing_comma_in_multiline_array' => true,
+        'trailing_comma_in_multiline' => true,
         // There should be no empty lines after class opening brace.
         'no_blank_lines_after_class_opening' => true,
         // There should not be blank lines between docblock and the documented element.

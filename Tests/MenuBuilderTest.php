@@ -3,12 +3,14 @@
 namespace Nwidart\Menus\Tests;
 
 use Illuminate\Config\Repository;
+
 use Nwidart\Menus\MenuBuilder;
 use Nwidart\Menus\MenuItem;
+use PHPUnit\Framework\Attributes\Test;
 
 class MenuBuilderTest extends BaseTestCase
 {
-    /** @test */
+    #[Test]
     public function it_makes_a_menu_item()
     {
         $builder = new MenuBuilder('main', app(Repository::class));

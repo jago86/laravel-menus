@@ -2,18 +2,11 @@
 
 namespace Nwidart\Menus;
 
-use Illuminate\Foundation\AliasLoader;
+use Illuminate\Contracts\Support\DeferrableProvider;
 use Illuminate\Support\ServiceProvider;
 
-class MenusServiceProvider extends ServiceProvider
+class MenusServiceProvider extends ServiceProvider implements DeferrableProvider
 {
-    /**
-     * Indicates if loading of the provider is deferred.
-     *
-     * @var bool
-     */
-    protected $defer = true;
-
     /**
      * Bootstrap the application events.
      */
@@ -38,26 +31,9 @@ class MenusServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->registerHtmlPackage();
-
         $this->app->singleton('menus', function ($app) {
             return new Menu($app['view'], $app['config']);
         });
-    }
-
-    /**
-     * Register "iluminate/html" package.
-     */
-    private function registerHtmlPackage()
-    {
-        $this->app->register('Collective\Html\HtmlServiceProvider');
-
-        $aliases = [
-            'HTML' => 'Collective\Html\HtmlFacade',
-            'Form' => 'Collective\Html\FormFacade',
-        ];
-
-        AliasLoader::getInstance($aliases)->register();
     }
 
     /**

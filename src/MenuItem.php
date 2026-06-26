@@ -3,7 +3,6 @@
 namespace Nwidart\Menus;
 
 use Closure;
-use Collective\Html\HtmlFacade as HTML;
 use Illuminate\Contracts\Support\Arrayable as ArrayableContract;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Request;
@@ -385,7 +384,61 @@ class MenuItem implements ArrayableContract
 
         Arr::forget($attributes, ['active', 'icon']);
 
-        return HTML::attributes($attributes);
+        return $this->attributesToHtml($attributes);
+    }
+
+    /**
+     * Build an HTML attribute string from an array.
+     *
+     * Replaces the former dependency on laravelcollective/html
+     * (Collective\Html\HtmlFacade::attributes).
+     *
+     * @param array $attributes
+     *
+     * @return string
+     */
+    protected function attributesToHtml(array $attributes)
+    {
+        $html = [];
+
+        foreach ($attributes as $key => $value) {
+            $element = $this->attributeElement($key, $value);
+
+            if (!is_null($element)) {
+                $html[] = $element;
+            }
+        }
+
+        return count($html) > 0 ? ' ' . implode(' ', $html) : '';
+    }
+
+    /**
+     * Build a single attribute element.
+     *
+     * @param string $key
+     * @param mixed  $value
+     *
+     * @return string|null
+     */
+    protected function attributeElement($key, $value)
+    {
+        if (is_numeric($key)) {
+            return $value;
+        }
+
+        if (is_bool($value) && $key !== 'value') {
+            return $value ? $key : '';
+        }
+
+        if (is_array($value) && $key === 'class') {
+            return 'class="' . implode(' ', $value) . '"';
+        }
+
+        if (!is_null($value)) {
+            return $key . '="' . e($value, false) . '"';
+        }
+
+        return null;
     }
 
     /**

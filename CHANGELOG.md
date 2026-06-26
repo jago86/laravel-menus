@@ -4,6 +4,22 @@ All Notable changes to `laravel-menus` will be documented in this file.
 
 ## Next
 
+## 8.0.0 - 2026-06-26
+
+### Added
+
+- Laravel 12 and 13 support
+
+### Changed
+
+- Minimum PHP version is now 8.2
+- `MenusServiceProvider` now implements `Illuminate\Contracts\Support\DeferrableProvider` (the old `$defer` property has been ignored by Laravel since 5.8)
+
+### Removed
+
+- Dropped the `laravelcollective/html` dependency. The HTML attribute rendering used by `MenuItem` is now built in. As a consequence, this package no longer registers the global `HTML` and `Form` aliases; if your application relies on them, require `laravelcollective/html` (or an equivalent) directly.
+- Dropped support for PHP < 8.2 and Laravel < 12
+
 ## 6.0.0 - 2020-11-11
 
 ### Added

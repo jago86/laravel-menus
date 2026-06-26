@@ -3,8 +3,10 @@
 namespace Nwidart\Menus\Tests;
 
 use Illuminate\Support\Arr;
+
 use Nwidart\Menus\Menu;
 use Nwidart\Menus\MenuItem;
+use PHPUnit\Framework\Attributes\Test;
 
 class MenuItemTest extends BaseTestCase
 {
@@ -18,7 +20,7 @@ class MenuItemTest extends BaseTestCase
         parent::setUp();
         $this->menu = app(Menu::class);
     }
-    /** @test */
+    #[Test]
     public function it_can_make_an_empty_menu_item()
     {
         $menuItem = MenuItem::make([]);
@@ -26,7 +28,7 @@ class MenuItemTest extends BaseTestCase
         $this->assertInstanceOf(MenuItem::class, $menuItem);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_set_properties_on_menu_item()
     {
         $properties = [
@@ -45,7 +47,7 @@ class MenuItemTest extends BaseTestCase
         $this->assertEquals($properties, $menuItem->getProperties());
     }
 
-    /** @test */
+    #[Test]
     public function it_can_fill_a_menu_item_with_allowed_properties()
     {
         $properties = [
@@ -72,7 +74,7 @@ class MenuItemTest extends BaseTestCase
         $this->assertSame(1, $menuItem->order);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_set_icon_via_attributes()
     {
         $menuItem = MenuItem::make(['attributes' => ['icon' => 'fa fa-user']]);
@@ -80,7 +82,7 @@ class MenuItemTest extends BaseTestCase
         $this->assertEquals('fa fa-user', $menuItem->icon);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_add_a_child_menu_item()
     {
         $menuItem = MenuItem::make(['title' => 'Parent Item']);
@@ -89,7 +91,7 @@ class MenuItemTest extends BaseTestCase
         $this->assertCount(1, $menuItem->getChilds());
     }
 
-    /** @test */
+    #[Test]
     public function it_can_get_ordered_children()
     {
         $this->app['config']->set('menus.ordering', true);
@@ -102,7 +104,7 @@ class MenuItemTest extends BaseTestCase
         $this->assertEquals('Child Item', $children[0]->title);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_create_a_dropdown_menu_item()
     {
         $menuItem = MenuItem::make(['title' => 'Parent Item']);
@@ -114,7 +116,7 @@ class MenuItemTest extends BaseTestCase
         $this->assertCount(2, $menuItem->getChilds()[0]->getChilds());
     }
 
-    /** @test */
+    #[Test]
     public function it_can_make_a_simple_route_menu_item()
     {
         $menuItem = MenuItem::make(['title' => 'Parent Item']);
@@ -129,7 +131,7 @@ class MenuItemTest extends BaseTestCase
         $this->assertEquals(['user_id' => 1], $childMenuItem->route[1]);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_make_a_route_menu_item()
     {
         $menuItem = MenuItem::make(['title' => 'Parent Item']);
@@ -146,7 +148,7 @@ class MenuItemTest extends BaseTestCase
         $this->assertEquals(['my-attr' => 'value'], $childMenuItem->attributes);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_make_a_simple_url_menu_item()
     {
         $menuItem = MenuItem::make(['title' => 'Parent Item']);
@@ -161,7 +163,7 @@ class MenuItemTest extends BaseTestCase
         $this->assertEquals('Account', $childMenuItem->title);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_make_a_url_menu_item()
     {
         $menuItem = MenuItem::make(['title' => 'Parent Item']);
@@ -178,7 +180,7 @@ class MenuItemTest extends BaseTestCase
         $this->assertEquals(['my-attr' => 'value'], $childMenuItem->attributes);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_add_a_menu_item_divider()
     {
         $menuItem = MenuItem::make(['title' => 'Parent Item']);
@@ -195,7 +197,7 @@ class MenuItemTest extends BaseTestCase
         $this->assertTrue($dividerMenuItem->isDivider());
     }
 
-    /** @test */
+    #[Test]
     public function it_can_add_a_header_menu_item()
     {
         $menuItem = MenuItem::make(['title' => 'Parent Item']);
@@ -213,7 +215,7 @@ class MenuItemTest extends BaseTestCase
         $this->assertTrue($headerItem->isHeader());
     }
 
-    /** @test */
+    #[Test]
     public function it_can_get_the_correct_url_for_url_type()
     {
         $menuItem = MenuItem::make(['url' => 'settings/account', 'title' => 'Parent Item']);
@@ -221,7 +223,7 @@ class MenuItemTest extends BaseTestCase
         $this->assertEquals('http://localhost/settings/account', $menuItem->getUrl());
     }
 
-    /** @test */
+    #[Test]
     public function it_can_get_the_correct_url_for_route_type()
     {
         $this->app['router']->get('settings/account', ['as' => 'settings.account']);
@@ -235,7 +237,7 @@ class MenuItemTest extends BaseTestCase
         $this->assertEquals('http://localhost/settings/account', $childMenuItem->getUrl());
     }
 
-    /** @test */
+    #[Test]
     public function it_can_get_request_uri()
     {
         $menuItem = MenuItem::make(['url' => 'settings/account', 'title' => 'Parent Item']);
@@ -243,7 +245,7 @@ class MenuItemTest extends BaseTestCase
         $this->assertEquals('settings/account', $menuItem->getRequest());
     }
 
-    /** @test */
+    #[Test]
     public function it_can_get_the_icon_html_attribute()
     {
         $menuItem = MenuItem::make(['url' => 'settings/account', 'title' => 'Parent Item', 'icon' => 'fa fa-user']);
@@ -251,7 +253,7 @@ class MenuItemTest extends BaseTestCase
         $this->assertEquals('<i class="fa fa-user"></i>', $menuItem->getIcon());
     }
 
-    /** @test */
+    #[Test]
     public function it_returns_no_icon_if_none_exist()
     {
         $menuItem = MenuItem::make(['url' => 'settings/account', 'title' => 'Parent Item']);
@@ -259,7 +261,7 @@ class MenuItemTest extends BaseTestCase
         $this->assertNull($menuItem->getIcon());
     }
 
-    /** @test */
+    #[Test]
     public function it_returns_default_icon_if_none_exist()
     {
         $menuItem = MenuItem::make(['url' => 'settings/account', 'title' => 'Parent Item']);
@@ -267,7 +269,7 @@ class MenuItemTest extends BaseTestCase
         $this->assertEquals('<i class="fa fa-user"></i>', $menuItem->getIcon('fa fa-user'));
     }
 
-    /** @test */
+    #[Test]
     public function it_can_get_item_properties()
     {
         $menuItem = MenuItem::make(['url' => 'settings/account', 'title' => 'Parent Item']);
@@ -275,7 +277,7 @@ class MenuItemTest extends BaseTestCase
         $this->assertEquals(['url' => 'settings/account', 'title' => 'Parent Item'], $menuItem->getProperties());
     }
 
-    /** @test */
+    #[Test]
     public function it_can_get_item_html_attributes()
     {
         $menuItem = MenuItem::make(['url' => 'settings/account', 'title' => 'Parent Item', 'attributes' => ['my-attr' => 'value']]);
@@ -283,7 +285,7 @@ class MenuItemTest extends BaseTestCase
         $this->assertEquals(' my-attr="value"', $menuItem->getAttributes());
     }
 
-    /** @test */
+    #[Test]
     public function it_can_check_for_a_submenu()
     {
         $menuItem = MenuItem::make(['title' => 'Parent Item']);

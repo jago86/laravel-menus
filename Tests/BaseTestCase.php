@@ -2,7 +2,6 @@
 
 namespace Nwidart\Menus\Tests;
 
-use Collective\Html\HtmlServiceProvider;
 use Nwidart\Menus\MenusServiceProvider;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
 
@@ -18,7 +17,6 @@ abstract class BaseTestCase extends OrchestraTestCase
     protected function getPackageProviders($app)
     {
         return [
-            HtmlServiceProvider::class,
             MenusServiceProvider::class,
         ];
     }

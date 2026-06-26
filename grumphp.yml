@@ -3,7 +3,7 @@ parameters:
     bin_dir: vendor/bin
     stop_on_failure: true
     tasks:
-      phpcsfixer2:
-        config: .php_cs.dist
+      phpcsfixer:
+        config: .php-cs-fixer.dist.php
       composer:
         file: ./composer.json

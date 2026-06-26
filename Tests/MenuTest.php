@@ -3,7 +3,9 @@
 namespace Nwidart\Menus\Tests;
 
 use Nwidart\Menus\Menu;
+
 use Nwidart\Menus\MenuBuilder;
+use PHPUnit\Framework\Attributes\Test;
 
 class MenuTest extends BaseTestCase
 {
@@ -17,7 +19,7 @@ class MenuTest extends BaseTestCase
         parent::setUp();
         $this->menu = app(Menu::class);
     }
-    /** @test */
+    #[Test]
     public function it_generates_an_empty_menu()
     {
         $this->menu->create('test', function (MenuBuilder $menu) {
@@ -34,7 +36,7 @@ TEXT;
         self::assertEquals($expected, $this->menu->get('test'));
     }
 
-    /** @test */
+    #[Test]
     public function it_makes_is_an_alias_for_create()
     {
         $this->menu->make('test', function (MenuBuilder $menu) {
@@ -51,7 +53,7 @@ TEXT;
         self::assertEquals($expected, $this->menu->get('test'));
     }
 
-    /** @test */
+    #[Test]
     public function it_render_is_an_alias_of_get()
     {
         $this->menu->make('test', function (MenuBuilder $menu) {
@@ -68,7 +70,7 @@ TEXT;
         self::assertEquals($expected, $this->menu->render('test'));
     }
 
-    /** @test */
+    #[Test]
     public function it_can_get_the_instance_of_a_menu()
     {
         $this->menu->create('test', function (MenuBuilder $menu) {
@@ -77,7 +79,7 @@ TEXT;
         $this->assertInstanceOf(MenuBuilder::class, $this->menu->instance('test'));
     }
 
-    /** @test */
+    #[Test]
     public function it_can_modify_a_menu_instance()
     {
         $this->menu->create('test', function (MenuBuilder $menu) {
@@ -90,7 +92,7 @@ TEXT;
         $this->assertCount(1, $this->menu->instance('test'));
     }
 
-    /** @test */
+    #[Test]
     public function it_gets_a_partial_for_dropdown_styles()
     {
         $this->menu->create('test', function (MenuBuilder $menu) {
@@ -99,7 +101,7 @@ TEXT;
         $this->assertStringContainsString('.dropdown-submenu', $this->menu->style());
     }
 
-    /** @test */
+    #[Test]
     public function it_can_get_all_menus()
     {
         $this->menu->create('main', function (MenuBuilder $menu) {
@@ -110,7 +112,7 @@ TEXT;
         $this->assertCount(2, $this->menu->all());
     }
 
-    /** @test */
+    #[Test]
     public function it_can_count_menus()
     {
         $this->menu->create('main', function (MenuBuilder $menu) {
@@ -121,7 +123,7 @@ TEXT;
         $this->assertEquals(2, $this->menu->count());
     }
 
-    /** @test */
+    #[Test]
     public function it_can_destroy_all_menus()
     {
         $this->menu->create('main', function (MenuBuilder $menu) {
